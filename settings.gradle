@@ -1,4 +1,4 @@
 include ':app'
 include ':network'
-include ':common'
+include ':network-kt'
 rootProject.name = "HttpNetWork"
