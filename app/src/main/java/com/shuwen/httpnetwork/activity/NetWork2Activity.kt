@@ -35,12 +35,18 @@ class NetWork2Activity : AppCompatActivity(), CoroutineScope by CoroutineScope(D
     private fun request(){
         launch {
             val requestHelper = Request()
-            var result : ResponseResult<List<BannerInfo>>
+            var result : ResponseResult<List<BannerInfo>>? = null
             withContext(Dispatchers.IO){
-                result = requestHelper.getBanner()
-                Log.i(TAG, "-1--${result.data?.get(0)?.title}")
+                //必须要这样写，避免网络错误出现的异常等
+                try {
+                    result = requestHelper.getBanner()
+                }catch (e: Exception){
+                    Log.i(TAG, "${e.message}")
+                }
+
+                Log.i(TAG, "-1--${result?.data?.get(0)?.title}")
             }
-            Log.i(TAG, "-2--${result.data?.get(0)?.title}")
+            Log.i(TAG, "-2--${result?.data?.get(0)?.title}")
         }
 
         Log.i(TAG, "---end")
